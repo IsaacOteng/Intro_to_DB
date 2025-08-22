@@ -5,13 +5,13 @@ Script to create the database 'alx_book_store' in MySQL.
 """
 
 import mysql.connector
-from mysql.connector import Error
+import sys
 
 def create_database():
     connection = None
     cursor = None
     try:
-        # connect to MySQL server (update user/password if needed)
+        # Connect to MySQL server (update credentials if needed)
         connection = mysql.connector.connect(
             host="localhost",
             user="root",
@@ -22,11 +22,12 @@ def create_database():
         cursor.execute("CREATE DATABASE IF NOT EXISTS alx_book_store")
         print("Database 'alx_book_store' created successfully!")
 
-    except Error as e:
+    except mysql.connector.Error as e:
         print(f"Error while connecting to MySQL: {e}")
+        sys.exit(1)
 
     finally:
-        # close cursor and connection safely
+        # Close cursor and connection safely
         if cursor is not None:
             cursor.close()
         if connection is not None and connection.is_connected():
